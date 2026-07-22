@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Studio Lana – frizerski salon u Beogradu. Šišanje, farbanje i styling za modernu ženu." />
+  <title>Studio Lana | Frizerski Salon Beograd</title>
+
+  <!-- Google Fonts: Cormorant Garamond (elegance) + Inter (readability) -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+    /* =============================================
+       CSS CUSTOM PROPERTIES – Brand tokens
+    ============================================= */
+    :root {
+      --color-primary:   #2C1A1A; /* deep espresso brown */
+      --color-accent:    #C9956A; /* warm rose-gold */
+      --color-accent-lt: #F0DDD0; /* blush, light accent */
+      --color-bg:        #FDFAF7; /* warm off-white */
+      --color-bg-dark:   #1E1212; /* dark hero bg */
+      --color-text:      #2C1A1A;
+      --color-text-muted:#6B5555;
+      --color-white:     #FFFFFF;
+      --color-border:    #E8D8CC;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+
+      --radius-sm: 4px;
+      --radius-md: 10px;
+      --radius-lg: 20px;
+
+      --transition: 0.3s ease;
+      --shadow-card: 0 4px 24px rgba(44,26,26,0.08);
+      --shadow-hover: 0 8px 36px rgba(44,26,26,0.14);
+    }
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul { list-style: none; }
+
+    /* =============================================
+       UTILITY CLASSES
+    ============================================= */
+    .container {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.2;
+      color: var(--color-primary);
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--color-text-muted);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: var(--color-white);
+    }
+
+    .btn-primary:hover {
+      background: #b8825a;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--color-white);
+      color: var(--color-white);
+    }
+
+    .btn-outline:hover {
+      background: var(--color-white);
+      color: var(--color-primary);
+    }
+
+    .btn-outline-dark {
+      background: transparent;
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .btn-outline-dark:hover {
+      background: var(--color-accent);
+      color: var(--color-white);
+    }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 20px;
+      background: transparent;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+
+    .navbar.scrolled {
+      background: rgba(253,250,247,0.97);
+      box-shadow: 0 2px 20px rgba(44,26,26,0.08);
+    }
+
+    .navbar__inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Logo */
+    .navbar__logo {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--color-white);
+      transition: color var(--transition);
+    }
+
+    .navbar.scrolled .navbar__logo { color: var(--color-primary); }
+
+    .navbar__logo span {
+      color: var(--color-accent);
+    }
+
+    /* Desktop nav links */
+    .navbar__links {
+      display: none;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .navbar__links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      transition: color var(--transition);
+    }
+
+    .navbar.scrolled .navbar__links a { color: var(--color-text-muted); }
+
+    .navbar__links a:hover,
+    .navbar.scrolled .navbar__links a:hover { color: var(--color-accent); }
+
+    .navbar__links .btn { padding: 10px 24px; }
+
+    /* Hamburger */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      align-items: center;
+    }
+
+    .hamburger__line {
+      width: 24px;
+      height: 2px;
+      background: var(--color-white);
+      border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition), background var(--transition);
+      transform-origin: center;
+    }
+
+    .navbar.scrolled .hamburger__line { background: var(--color-primary); }
+
+    .hamburger.open .hamburger__line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open .hamburger__line:nth-child(2) { opacity: 0; }
+    .hamburger.open .hamburger__line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px; left: 0; right: 0;
+      background: var(--color-bg);
+      padding: 24px 32px 32px;
+      box-shadow: 0 8px 32px rgba(44,26,26,0.12);
+      flex-direction: column;
+      gap: 20px;
+      z-index: 999;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      letter-spacing: 0.06em;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-border);
+      transition: color var(--transition);
+    }
+
+    .mobile-menu a:hover { color: var(--color-accent); }
+
+    .mobile-menu .btn {
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* =============================================
+       HERO SECTION
+    ============================================= */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      /* PLACEHOLDER: hero background photo – replaced with gradient */
+      background: linear-gradient(135deg, #1E1212 0%, #3a2020 40%, #2c1818 70%, #1a0f0f 100%);
+    }
+
+    /* Decorative texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 70% 50%, rgba(201,149,106,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(201,149,106,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Decorative circle */
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -120px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,149,106,0.2);
+      pointer-events: none;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      padding: 120px 0 80px;
+    }
+
+    .hero__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .hero__eyebrow span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .hero__eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--color-accent);
+    }
+
+    .hero__title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2.8rem, 8vw, 5.2rem);
+      line-height: 1.1;
+      color: var(--color-white);
+      margin-bottom: 24px;
+    }
+
+    .hero__title em {
+      font-style: italic;
+      color: var(--color-accent);
+    }
+
+    .hero__subtitle {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 40px;
+    }
+
+    .hero__cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    /* Scroll indicator */
+    .hero__scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+
+    .hero__scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* =============================================
+       SERVICES SECTION
+    ============================================= */
+    .services {
+      padding: 80px 0;
+      background: var(--color-bg);
+    }
+
+    .services__header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .services__header .section-subtitle {
+      margin: 0 auto;
+    }
+
+    .services__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 36px 32px;
+      transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--color-accent);
+      transition: height var(--transition);
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    }
+
+    .service-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-4px);
+      border-color: var(--color-accent-lt);
+    }
+
+    .service-card:hover::before { height: 100%; }
+
+    .service-card__icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--color-accent-lt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .service-card__title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--color-primary);
+      margin-bottom: 12px;
+    }
+
+    .service-card__desc {
+      font-size: 0.93rem;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .service-card__list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .service-card__list li {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .service-card__list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--color-accent);
+      font-size: 0.7rem;
+      top: 2px;
+    }
+
+    /* =============================================
+       ABOUT SECTION
+    ============================================= */
+    .about {
+      padding: 80px 0;
+      background: var(--color-accent-lt);
+    }
+
+    .about__inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    /* Photo placeholder */
+    .about__image {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      /* PLACEHOLDER: photo of Studio Lana interior or team */
+      background: linear-gradient(135deg, #d4b5a0 0%, #c09580 40%, #a8795e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+    }
+
+    .about__image-label {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .about__content .section-title { margin-bottom: 20px; }
+
+    .about__text {
+      font-size: 1rem;
+      color: var(--color-text-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .about__stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .about__stat {
+      text-align: center;
+      padding: 20px 12px;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+    }
+
+    .about__stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .about__stat-label {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* =============================================
+       PRICING SECTION
+    ============================================= */
+    .pricing {
+      padding: 80px 0;
+      background: var(--color-bg);
+    }
+
+    .pricing__header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .pricing__note {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      margin-top: 10px;
+    }
+
+    .pricing__header .section-subtitle { margin: 0 auto; }
+
+    .pricing__groups {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .pricing__group {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .pricing__group-head {
+      padding: 20px 28px;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pricing__group-head span { font-size: 1.2rem; }
+
+    .pricing__group-head h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--color-white);
+    }
+
+    .pricing__items {
+      padding: 8px 0;
+    }
+
+    .pricing__item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 14px 28px;
+      border-bottom: 1px solid var(--color-border);
+      transition: background var(--transition);
+    }
+
+    .pricing__item:last-child { border-bottom: none; }
+    .pricing__item:hover { background: var(--color-accent-lt); }
+
+    .pricing__item-name {
+      font-size: 0.93rem;
+      color: var(--color-text);
+    }
+
+    .pricing__item-name small {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    .pricing__item-price {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--color-accent);
+      font-weight: 400;
+      white-space: nowrap;
+      margin-left: 16px;
+    }
+
+    .pricing__cta {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .pricing__cta p {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* =============================================
+       CONTACT SECTION
+    ============================================= */
+    .contact {
+      padding: 80px 0;
+      background: var(--color-primary);
+    }
+
+    .contact__header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .contact__header .section-label { color: var(--color-accent); }
+
+    .contact__header .section-title { color: var(--color-white); }
+
+    .contact__header .section-subtitle {
+      color: rgba(255,255,255,0.6);
+      margin: 0 auto;
+    }
+
+    .contact__inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    /* Contact info cards */
+    .contact__info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact__card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: background var(--transition);
+    }
+
+    .contact__card:hover { background: rgba(255,255,255,0.1); }
+
+    .contact__card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(201,149,106,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact__card-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 4px;
+    }
+
+    .contact__card-value {
+      font-size: 1rem;
+      color: var(--color-white);
+      line-height: 1.5;
+    }
+
+    .contact__card-value a {
+      color: var(--color-white);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .contact__card-value a:hover { color: var(--color-accent); }
+
+    /* Working hours table */
+    .contact__hours {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+    }
+
+    .contact__hours h4 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--color-white);
+      margin-bottom: 20px;
+    }
+
+    .hours__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hours__row:last-child { border-bottom: none; }
+
+    .hours__day {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .hours__time {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--color-white);
+    }
+
+    .hours__time.closed { color: rgba(255,255,255,0.3); }
+
+    /* Contact form */
+    .contact__form-wrap {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 32px 28px;
+    }
+
+    .contact__form-wrap h4 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--color-white);
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-family: var(--font-body);
+      font-size: 0.93rem;
+      color: var(--color-white);
+      transition: border-color var(--transition), background var(--transition);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+
+    .form-group select option { background: var(--color-primary); color: var(--color-white); }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--color-accent);
+      background: rgba(255,255,255,0.12);
+    }
+
+    .form-group textarea { min-height: 110px; resize: vertical; }
+
+    .form__submit {
+      width: 100%;
+      padding: 15px;
+      margin-top: 8px;
+    }
+
+    /* Success message (hidden by default) */
+    .form__success {
+      display: none;
+      text-align: center;
+      padding: 24px;
+      color: #a8e6cf;
+      font-size: 0.95rem;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .footer {
+      background: var(--color-bg-dark);
+      padding: 32px 20px;
+      text-align: center;
+    }
+
+    .footer__logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--color-white);
+      margin-bottom: 12px;
+    }
+
+    .footer__logo span { color: var(--color-accent); }
+
+    .footer__links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .footer__links a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      transition: color var(--transition);
+    }
+
+    .footer__links a:hover { color: var(--color-accent); }
+
+    .footer__copy {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* =============================================
+       SCROLL-TO-TOP BUTTON
+    ============================================= */
+    .scroll-top {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: var(--color-white);
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(201,149,106,0.4);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity var(--transition), transform var(--transition);
+      z-index: 900;
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .scroll-top:hover { background: #b8825a; }
+
+    /* =============================================
+       RESPONSIVE – TABLET (768px)
+    ============================================= */
+    @media (min-width: 768px) {
+      .navbar__links { display: flex; }
+      .hamburger { display: none; }
+
+      .services__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .about__inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+      }
+
+      .about__image { min-height: 380px; }
+
+      .pricing__groups {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .contact__inner {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .contact__form-col {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* =============================================
+       RESPONSIVE – DESKTOP (1200px)
+    ============================================= */
+    @media (min-width: 1200px) {
+      .services { padding: 100px 0; }
+      .about    { padding: 100px 0; }
+      .pricing  { padding: 100px 0; }
+      .contact  { padding: 100px 0; }
+
+      .hero__title { font-size: 5.5rem; }
+
+      .contact__inner {
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: start;
+      }
+
+      .contact__form-col {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       NAVIGATION
+  ============================================= -->
+  <nav class="navbar" id="navbar" aria-label="Glavna navigacija">
+    <div class="navbar__inner">
+      <a href="#hero" class="navbar__logo">Studio <span>Lana</span></a>
+
+      <ul class="navbar__links" role="list">
+        <li><a href="#services">Usluge</a></li>
+        <li><a href="#about">O nama</a></li>
+        <li><a href="#pricing">Cenovnik</a></li>
+        <li><a href="#contact" class="btn btn-primary">Zakažite termin</a></li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Otvori meni" aria-expanded="false">
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobilna navigacija">
+    <a href="#services" class="mobile-link">Usluge</a>
+    <a href="#about"    class="mobile-link">O nama</a>
+    <a href="#pricing"  class="mobile-link">Cenovnik</a>
+    <a href="#contact"  class="mobile-link">Kontakt</a>
+    <a href="#contact" class="btn btn-primary">Zakažite termin</a>
+  </div>
+
+  <!-- =============================================
+       HERO
+  ============================================= -->
+  <section class="hero" id="hero" aria-label="Uvod">
+    <div class="container">
+      <div class="hero__content">
+        <div class="hero__eyebrow" aria-hidden="true">
+          <span>Frizerski salon · Beograd</span>
+        </div>
+
+        <h1 class="hero__title">
+          Vaša kosa,<br>
+          <em>vaš identitet.</em>
+        </h1>
+
+        <p class="hero__subtitle">
+          U Studio Lana verujemo da svaka žena zaslužuje da se oseća izuzetno.
+          Kombinujemo savremene tehnike sa toplinom i pažnjom koja se oseća
+          od prvog koraka do izlaska iz salona.
+        </p>
+
+        <div class="hero__cta">
+          <a href="#contact" class="btn btn-primary">Zakažite termin</a>
+          <a href="#services" class="btn btn-outline">Naše usluge</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__scroll" aria-hidden="true">scroll</div>
+  </section>
+
+  <!-- =============================================
+       SERVICES
+  ============================================= -->
+  <section class="services" id="services" aria-labelledby="services-title">
+    <div class="container">
+      <div class="services__header">
+        <span class="section-label">Šta nudimo</span>
+        <h2 class="section-title" id="services-title">Naše usluge</h2>
+        <p class="section-subtitle">
+          Od klasičnog šišanja do kompleksnih tehnika farbanja — sve pod jednim krovom,
+          uz stručne frizerke i premijum proizvode.
+        </p>
+      </div>
+
+      <div class="services__grid">
+
+        <!-- Service 1: Šišanje -->
+        <article class="service-card">
+          <div class="service-card__icon" aria-hidden="true">✂️</div>
+          <h3 class="service-card__title">Šišanje</h3>
+          <p class="service-card__desc">
+            Precizni rezovi prilagođeni obliku vašeg lica, tipu kose i vašem načinu života.
+            Svaki rez je premišljen, svaki detalj je važan.
+          </p>
+          <ul class="service-card__list">
+            <li>Žensko šišanje i oblikovanje</li>
+            <li>Dečije šišanje</li>
+            <li>Šišanje i feniranje</li>
+            <li>Korekcija šiške</li>
+          </ul>
+        </article>
+
+        <!-- Service 2: Farbanje -->
+        <article class="service-card">
+          <div class="service-card__icon" aria-hidden="true">🎨</div>
+          <h3 class="service-card__title">Farbanje</h3>
+          <p class="service-card__desc">
+            Moderan pristup boji — od prirodnih nijansi do odvažnih transformacija.
+            Koristimo premijum boje koje neguju kosu i daju trajne, žive rezultate.
+          </p>
+          <ul class="service-card__list">
+            <li>Jednobojno farbanje</li>
+            <li>Balayage &amp; Ombre</li>
+            <li>Highlights &amp; Lowlights</li>
+            <li>Korekcija boje</li>
+          </ul>
+        </article>
+
+        <!-- Service 3: Styling -->
+        <article class="service-card">
+          <div class="service-card__icon" aria-hidden="true">💫</div>
+          <h3 class="service-card__title">Styling</h3>
+          <p class="service-card__desc">
+            Savršena frizura za svaku priliku — svadbu, poslovni sastanak ili večernji izlazak.
+            Tretmani koji hrane i regenerišu kosu iznutra.
+          </p>
+          <ul class="service-card__list">
+            <li>Svečane frizure &amp; updo</li>
+            <li>Keratin tretman</li>
+            <li>Botox za kosu</li>
+            <li>Feniranje &amp; uvijanje</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       ABOUT
+  ============================================= -->
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <div class="about__inner">
+
+        <!-- Photo placeholder -->
+        <div class="about__image" role="img" aria-label="Fotografija salona Studio Lana">
+          <p class="about__image-label">
+            [PLACEHOLDER: fotografija interijera<br>ili tima salona Studio Lana]
+          </p>
+        </div>
+
+        <div class="about__content">
+          <span class="section-label">O nama</span>
+          <h2 class="section-title" id="about-title">Više od frizerskog salona</h2>
+
+          <p class="about__text">
+            Studio Lana je nastao iz jedne proste ideje — da svaka žena koja kroči
+            na naša vrata izađe osećajući se bolje nego kada je ušla.
+            Ne samo zbog frizure, već zbog celokupnog iskustva.
+          </p>
+
+          <p class="about__text">
+            Naš tim čine [PLACEHOLDER: broj] stručnih frizera sa godinama iskustva
+            u Beogradu i inostranstvu, kontinuirano edukovanih po najnovijim
+            trendovima i tehnikama.
+          </p>
+
+          <p class="about__text">
+            Radimo isključivo sa [PLACEHOLDER: naziv brendova/proizvoda] —
+            linijama koje su bezbedne za kosu i kosu ostavljaju zdravom i sjajnom.
+          </p>
+
+          <div class="about__stats">
+            <div class="about__stat">
+              <div class="about__stat-num">[PLACEHOLDER]</div>
+              <div class="about__stat-label">Godina iskustva</div>
+            </div>
+            <div class="about__stat">
+              <div class="about__stat-num">[PLACEHOLDER]</div>
+              <div class="about__stat-label">Zadovoljnih klijenata</div>
+            </div>
+            <div class="about__stat">
+              <div class="about__stat-num">[PLACEHOLDER]</div>
+              <div class="about__stat-label">Stručnih frizera</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       PRICING
+  ============================================= -->
+  <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+    <div class="container">
+      <div class="pricing__header">
+        <span class="section-label">Cenovnik</span>
+        <h2 class="section-title" id="pricing-title">Transparentne cene</h2>
+        <p class="section-subtitle">
+          Verujemo u jasnoću. Sve cene su okvirne i mogu varirati u zavisnosti
+          od dužine i gustine kose.
+        </p>
+        <p class="pricing__note">* Cene su u dinarima (RSD). Prikazane cene su okvirne.</p>
+      </div>
+
+      <div class="pricing__groups">
+
+        <!-- Group: Šišanje -->
+        <div class="pricing__group">
+          <div class="pricing__group-head">
+            <span aria-hidden="true">✂️</span>
+            <h3>Šišanje</h3>
+          </div>
+          <ul class="pricing__items">
+            <li class="pricing__item">
+              <span class="pricing__item-name">Žensko šišanje<small>kraća kosa</small></span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Žensko šišanje<small>srednja / duga kosa</small></span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Šišanje + feniranje</span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Korekcija šiške</span>
+              <span class="pricing__item-price">[PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Dečije šišanje</span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Group: Farbanje -->
+        <div class="pricing__group">
+          <div class="pricing__group-head">
+            <span aria-hidden="true">🎨</span>
+            <h3>Farbanje</h3>
+          </div>
+          <ul class="pricing__items">
+            <li class="pricing__item">
+              <span class="pricing__item-name">Jednobojno farbanje<small>kratka kosa</small></span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Jednobojno farbanje<small>duga kosa</small></span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Balayage / Ombre</span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Highlights<small>folije</small></span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Korekcija boje</span>
+              <span class="pricing__item-price">po dogovoru</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Group: Styling & Tretmani -->
+        <div class="pricing__group">
+          <div class="pricing__group-head">
+            <span aria-hidden="true">💫</span>
+            <h3>Styling &amp; Tretmani</h3>
+          </div>
+          <ul class="pricing__items">
+            <li class="pricing__item">
+              <span class="pricing__item-name">Feniranje</span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Svečana frizura</span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Keratin tretman</span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Botox za kosu</span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+            <li class="pricing__item">
+              <span class="pricing__item-name">Tretman regeneracije</span>
+              <span class="pricing__item-price">od [PLACEHOLDER] RSD</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pricing__cta">
+        <p>Niste sigurni šta vam treba? Javite nam se — savetovanje je besplatno.</p>
+        <a href="#contact" class="btn btn-outline-dark">Zakažite konsultaciju</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       CONTACT
+  ============================================= -->
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="container">
+      <div class="contact__header">
+        <span class="section-label">Kontakt</span>
+        <h2 class="section-title" id="contact-title">Posetite nas</h2>
+        <p class="section-subtitle">
+          Zakažite termin telefonom, porukom ili putem forme ispod.
+          Jedva čekamo da vas upoznamo!
+        </p>
+      </div>
+
+      <div class="contact__inner">
+
+        <!-- Info + Hours -->
+        <div class="contact__info">
+
+          <div class="contact__card">
+            <div class="contact__card-icon" aria-hidden="true">📍</div>
+            <div>
+              <div class="contact__card-title">Adresa</div>
+              <div class="contact__card-value">
+                [PLACEHOLDER: ulica i broj],<br>
+                [PLACEHOLDER: opština], Beograd
+              </div>
+            </div>
+          </div>
+
+          <div class="contact__card">
+            <div class="contact__card-icon" aria-hidden="true">📞</div>
+            <div>
+              <div class="contact__card-title">Telefon</div>
+              <div class="contact__card-value">
+                <a href="tel:[PLACEHOLDER]">[PLACEHOLDER: broj telefona]</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact__card">
+            <div class="contact__card-icon" aria-hidden="true">📧</div>
+            <div>
+              <div class="contact__card-title">Email</div>
+              <div class="contact__card-value">
+                <a href="mailto:[PLACEHOLDER]">[PLACEHOLDER: email adresa]</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact__card">
+            <div class="contact__card-icon" aria-hidden="true">📱</div>
+            <div>
+              <div class="contact__card-title">Instagram</div>
+              <div class="contact__card-value">
+                <a href="https://instagram.com/[PLACEHOLDER]" target="_blank" rel="noopener">
+                  @[PLACEHOLDER: instagram handle]
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Working hours -->
+        <div class="contact__hours">
+          <h4>Radno vreme</h4>
+
+          <div class="hours__row">
+            <span class="hours__day">Ponedeljak</span>
+            <span class="hours__time">[PLACEHOLDER: npr. 09:00 – 20:00]</span>
+          </div>
+          <div class="hours__row">
+            <span class="hours__day">Utorak</span>
+            <span class="hours__time">[PLACEHOLDER]</span>
+          </div>
+          <div class="hours__row">
+            <span class="hours__day">Sreda</span>
+            <span class="hours__time">[PLACEHOLDER]</span>
+          </div>
+          <div class="hours__row">
+            <span class="hours__day">Četvrtak</span>
+            <span class="hours__time">[PLACEHOLDER]</span>
+          </div>
+          <div class="hours__row">
+            <span class="hours__day">Petak</span>
+            <span class="hours__time">[PLACEHOLDER]</span>
+          </div>
+          <div class="hours__row">
+            <span class="hours__day">Subota</span>
+            <span class="hours__time">[PLACEHOLDER: npr. 09:00 – 16:00]</span>
+          </div>
+          <div class="hours__row">
+            <span class="hours__day">Nedelja</span>
+            <span class="hours__time closed">Zatvoreno</span>
+          </div>
+        </div>
+
+        <!-- Contact form -->
+        <div class="contact__form-col">
+          <div class="contact__form-wrap">
+            <h4>Pošaljite upit</h4>
+
+            <form id="contactForm" novalidate>
+              <div class="form-group">
+                <label for="name">Ime i prezime</label>
+                <input type="text" id="name" name="name" placeholder="Ana Petrović" required />
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Telefon</label>
+                <input type="tel" id="phone" name="phone" placeholder="+381 60 000 0000" />
+              </div>
+
+              <div class="form-group">
+                <label for="service">Usluga</label>
+                <select id="service" name="service">
+                  <option value="">— Izaberite uslugu —</option>
+                  <option>Šišanje</option>
+                  <option>Farbanje</option>
+                  <option>Balayage / Ombre</option>
+                  <option>Keratin tretman</option>
+                  <option>Svečana frizura</option>
+                  <option>Konsultacija</option>
+                  <option>Ostalo</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Poruka (opciono)</label>
+                <textarea id="message" name="message" placeholder="Napišite nam nešto o vašim željama..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary form__submit">Pošalji upit</button>
+            </form>
+
+            <div class="form__success" id="formSuccess" role="alert">
+              ✅ Hvala! Vaša poruka je primljena. Javićemo vam se uskoro.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer class="footer" aria-label="Podnožje stranice">
+    <div class="footer__logo">Studio <span>Lana</span></div>
+
+    <nav class="footer__links" aria-label="Footer navigacija">
+      <a href="#services">Usluge</a>
+      <a href="#about">O nama</a>
+      <a href="#pricing">Cenovnik</a>
+      <a href="#contact">Kontakt</a>
+    </nav>
+
+    <p class="footer__copy">
+      &copy; <span id="year"></span> Studio Lana · Sva prava zadržana
+    </p>
+  </footer>
+
+  <!-- Scroll-to-top button -->
+  <button class="scroll-top" id="scrollTop" aria-label="Nazad na vrh">↑</button>
+
+  <!-- =============================================
+       JAVASCRIPT – Vanilla only
+  ============================================= -->
+  <script>
+    // ---------- Navbar scroll behavior ----------
+    const navbar = document.getElementById('navbar');
+
+    function handleNavbarScroll() {
+      if (window.scrollY > 60) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
+
+    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+    handleNavbarScroll();
+
+    // ---------- Hamburger menu ----------
+    const hamburger   = document.getElementById('hamburger');
+    const mobileMenu  = document.getElementById('mobileMenu');
+    const mobileLinks = mobileMenu.querySelectorAll('.mobile-link, .btn');
+
+    function toggleMenu(state) {
+      const open = state !== undefined ? state : !mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open', open);
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', String(open));
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    hamburger.addEventListener('click', () => toggleMenu());
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => toggleMenu(false));
+    });
+
+    // Close menu on outside click
+    document.addEventListener('click', (e) => {
+      if (mobileMenu.classList.contains('open') &&
+          !mobileMenu.contains(e.target) &&
+          !hamburger.contains(e.target)) {
+        toggleMenu(false);
+      }
+    });
+
+    // ---------- Scroll-to-top ----------
+    const scrollTopBtn = document.getElementById('scrollTop');
+
+    window.addEventListener('scroll', () => {
+      scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ---------- Current year in footer ----------
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ---------- Contact form – static simulation ----------
+    // NOTE: Form does not actually send data (no backend).
+    // Replace with a real form handler (e.g. Formspree, n8n webhook) before launch.
+    const contactForm  = document.getElementById('contactForm');
+    const formSuccess  = document.getElementById('formSuccess');
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Basic validation
+      const name  = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!name) {
+        document.getElementById('name').focus();
+        return;
+      }
+
+      // Simulate submission
+      contactForm.style.display = 'none';
+      formSuccess.style.display = 'block';
+    });
+
+    // ---------- Subtle entrance animations (IntersectionObserver) ----------
+    const fadeEls = document.querySelectorAll('.service-card, .about__stat, .pricing__group, .contact__card, .contact__hours');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeEls.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(22px)';
+      el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
